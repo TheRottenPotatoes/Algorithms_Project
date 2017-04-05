@@ -45,7 +45,7 @@ bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
     float distance = sqrt((X*X) + (Y*Y)); //distance between sensors
     float sumRad = firstRad + secondRad;
     
-    if(sumRad <= distance)
+    if(sumRad < distance)
     {
         overlap = true;
     }
