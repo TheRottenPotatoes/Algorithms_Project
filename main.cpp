@@ -5,7 +5,7 @@
 #include <sstream>
 
 using namespace std;
-bool checkOverlap(Sensor checkSensor, Sensor existingSensor);
+bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
 
 int main()
 {
