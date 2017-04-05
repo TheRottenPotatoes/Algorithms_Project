@@ -18,3 +18,5 @@ ostream& operator<<(ostream& os, Sensor& A)
     os <<"X coordinate: "<< A.m_X <<"\tY coordinate: " <<A.m_Y <<"\tRadius: "<< A.m_Radius<<"\tBattery: "<<A.m_Battery<<endl;
     return os;
 }
+/*dosen't work yet will overload cout to let us cout
+to output x coor, y coor, radius, and battery.*\
