@@ -17,8 +17,8 @@ class Sensor
         void SetRadius(int val) { m_Radius = val; }
         int GetBattery() { return m_Battery; }
         void SetBattery(int val) { m_Battery = val; }
-        friend ostream& operator<<(ostream& os, Sensor &A);
-
+        friend ostream& operator<<(ostream& os, Sensor &A); //dosen't work yet will overload cout to let us cout
+                                                            //to output x coor, y coor, radius, and battery.
     private:
         int m_X;
         int m_Y;
