@@ -3,49 +3,53 @@
 #include <ctime>
 #include <cstdlib>
 #include <sstream>
+#include <fstream>
+#include <cmath>
 
 using namespace std;
-bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
+//bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
 
 int main()
 {
+    ofstream fout;
     srand(time(0));
     const int NUMB_OF_SENSORS = 50;
     const int LIM_RAD = 5;
     const int LIM_BAT = 300;
-    const int LIM_X = 50;
-    const int LIM_Y = 50;
-    Sensor List_of_Sensors[NUMB_OF_SENSORS];
-    Sensor Active_Sensors[NUMB_OF_SENSORS];
+    const int LIM_X = 51;
+    const int LIM_Y = 51;
+    Sensor List_of_Sensors[60];
+    Sensor Active_Sensors[60];
     int activeSensorCount = 0;
 
-    cout<<"start"<<endl;
-    for(int i=0;i<NUMB_OF_SENSORS;i++){
-        List_of_Sensors[i]=Sensor(rand()%(LIM_X+1),rand()%(LIM_Y)+1,LIM_RAD,LIM_BAT);
 
+
+
+
+  fout.open("SensorInfo.csv");
+
+
+
+
+    for(int i = 0; i<50;i++){
+            List_of_Sensors[i] = Sensor(rand()%LIM_X,rand()%LIM_Y,LIM_RAD,LIM_BAT);
+    fout<<List_of_Sensors[i].GetX()<<","<<List_of_Sensors[i].GetY()<<","<<List_of_Sensors[i].GetRadius()<<","<<List_of_Sensors[i].GetBattery()<<endl;
     }
     return 0;
+
 }
 
-//function to check for overlap between two sensors
-bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
+bool checkOverlap(Sensor sensorOne, Sensor sensorTwo)
 {
     bool overlap = false;
-    //get coordinates and radius of sensors
-    float firstX = sensorOne.GetX();
-    float firstY = sensorOne.GetY();
-    float firstRad = sensorOne.GetRadius();
-    float secondX = sensorTwo.GetX();
-    float secondY = sensorTwo.GetY();
-    float secondRad = sensorTwo.GetRadius();
-    
+
     //calculate the distance betwwen both sensors
-    float centerX = secondX - firstX;
-    float centerY = secondY - firstY;
-    float distance = sqrt((X*X) + (Y*Y)); //distance between sensors
-    float sumRad = firstRad + secondRad;
-    
-    if(sumRad < distance)
+    float centerX = sensorTwo.GetX()-sensorOne.GetX();
+    float centerY = sensorTwo.GetY()-sensorOne.GetY();
+    float distance = sqrt((centerX*centerX) + (centerY*centerY)); //distance between sensors
+    float sumRad = sensorOne.GetRadius() + sensorTwo.GetRadius();
+
+    if(sumRad <= distance)
     {
         overlap = true;
     }

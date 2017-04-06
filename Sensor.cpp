@@ -5,18 +5,12 @@ Sensor::Sensor()
     //ctor
 }
 
-Sensor::Sensor(int Xcoor,int Ycoor,int Rad,int Bat)
-{
-    int m_X=Xcoor;
-    int m_Y=Ycoor;
-    int m_Radius=Rad;
-    int m_Battery=Bat;
-}
+Sensor::Sensor(int Xcoor,int Ycoor,int Rad,int Bat):m_X(Xcoor),m_Y(Ycoor),m_Radius(Rad),m_Battery(Bat) {}
 
-ostream& operator<<(ostream& os, Sensor& A)
-{
-    os <<"X coordinate: "<< A.m_X <<"\tY coordinate: " <<A.m_Y <<"\tRadius: "<< A.m_Radius<<"\tBattery: "<<A.m_Battery<<endl;
-    return os;
-}
-/*dosen't work yet will overload cout to let us cout
-to output x coor, y coor, radius, and battery.*\
+
+
+/*std::ostream& operator<<(Sensor& A,std::ostream fout){
+fout<<m_X<<","<<m_Y<<","<<m_Radius<<","<<m_Battery<<"\n";
+
+return fout;
+}*/
