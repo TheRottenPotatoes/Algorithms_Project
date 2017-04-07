@@ -6,8 +6,11 @@
 class Sensor
 {
     public:
+        // default constructor
         Sensor();
-        Sensor(int Xcoor,int Ycoor,int Radius,int Battery);
+        // made constructor to take in x and y coordinates.
+        //Sets radius to 5 and battery to 5
+        Sensor(int Xcoor,int Ycoor);
         int GetX() { return m_X; }
         void SetX(int val) { m_X = val; }
         int GetY() { return m_Y; }
@@ -16,7 +19,7 @@ class Sensor
         void SetRadius(int val) { m_Radius = val; }
         int GetBattery() { return m_Battery; }
         void SetBattery(int val) { m_Battery = val; }
-        //std::ostream& operator<<(std::ostream fout,Sensor& A);
+        void round_done();
 
     private:
         int m_X;

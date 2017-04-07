@@ -5,12 +5,11 @@ Sensor::Sensor()
     //ctor
 }
 
-Sensor::Sensor(int Xcoor,int Ycoor,int Rad,int Bat):m_X(Xcoor),m_Y(Ycoor),m_Radius(Rad),m_Battery(Bat) {}
+Sensor::Sensor(int Xcoor,int Ycoor):m_X(Xcoor),m_Y(Ycoor),m_Radius(5),m_Battery(300) {}
 
 
 
-/*std::ostream& operator<<(Sensor& A,std::ostream fout){
-fout<<m_X<<","<<m_Y<<","<<m_Radius<<","<<m_Battery<<"\n";
-
-return fout;
-}*/
+void Sensor::round_done(){
+m_Battery=-1;
+return;
+}
