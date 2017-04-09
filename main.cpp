@@ -15,7 +15,7 @@ int main()
     /*creates var for outstream
 
     srand(time(0));
-    /*initailzes srand to time NULL
+    /*initailzes srand to time NULL*/
 
     const int LIM_X = 51;
     const int LIM_Y = 51;
@@ -42,24 +42,24 @@ int main()
 
     made AREA OF SENSORS const to make it easier to calculate AreaTaken in the program later.
 
-    AreaTaken is to have a place to store the amount of area the optimal set takes up at each round.
+    AreaTaken is to have a place to store the amount of area the optimal set takes up at each round.*/
 
 
 
     bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
     bool ArrayCheckOverlap(Sensor activeSen[],int numb_of_activeSen,Sensor CheckAgainst);
     bool CheckBattery(Sensor check[], int numb_sensors);
-    /*fucntion calls
+    /*fucntion calls*/
 
 fout.open("SensorInfo.csv");
-/*opens fout to a .csv file so we can make Excel Graph the sensors for us
+/*opens fout to a .csv file so we can make Excel Graph the sensors for us*/
 
 
 for(int i = 0; i<NUMB_OF_SENSORS;i++){
             List_of_Sensors[i] = Sensor(rand()%LIM_X,rand()%LIM_Y);
     fout<<List_of_Sensors[i].GetX()<<","<<List_of_Sensors[i].GetY()<<","<<List_of_Sensors[i].GetRadius()<<","<<List_of_Sensors[i].GetBattery()<<endl;
     }
-    /* creates NUMB OF SENSORS  sensors and puts them in array List of Sensors. then outputs the list of sensors into "SensorInfo.csv"
+    // creates NUMB OF SENSORS  sensors and puts them in array List of Sensors. then outputs the list of sensors into "SensorInfo.csv"
     fout.close();
 
 
@@ -91,9 +91,9 @@ AreaTaken= AREA_OF_SENSORS*activeSensorCount;//finds the area covered by mulitpy
         }
         number_of_rounds++;
 }
-/*implementaion of greedy algorithm
+//implementaion of greedy algorithm
 
-cout<<"/n/nTimes Ran: "<<number_of_rounds<<endl;*/
+cout<<"/n/nTimes Ran: "<<number_of_rounds<<endl;
 bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
 bool ArrayCheckOverlap(Sensor activeSen[],int numb_of_activeSen,Sensor CheckAgainst);
 
