@@ -26,6 +26,7 @@ class Sensor
         int m_Y;
         int m_Radius;
         int m_Battery;
+
 };
 
 #endif // SENSOR_H
