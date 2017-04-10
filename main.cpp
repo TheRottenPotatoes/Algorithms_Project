@@ -7,78 +7,46 @@
 #include "sensor.h"
 using namespace std;
 
+const int LIM_X = 51;
+const int LIM_Y = 51;
+const int NUMB_OF_SENSORS = 50;
+
+int randomizeSensors(Sensor& List_of_Sensors[]);
+
+int populateActiveSensors(Sensor List_of_Sensors[], Sensor& activeSensors[]);
+
+void printData(int coverage, int round);
+    
 //M is the number of points to check in the AOI
 float estimateCoverage(int M, Sensor activeSensors[], int activeSensorCount);
 
+bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
+
+bool ArrayCheckOverlap(Sensor activeSen[],int numb_of_activeSen,Sensor CheckAgainst);
+
+bool CheckBattery(Sensor check[], int numb_sensors);
+
 int main()
 {
-    ofstream fout;
-    /*creates var for outstream
 
-    srand(time(0));
-    /*initailzes srand to time NULL*/
+    srand(time(NULL));
 
-    const int LIM_X = 51;
-    const int LIM_Y = 51;
-    const int NUMB_OF_SENSORS = 50;
-    Sensor List_of_Sensors[NUMB_OF_SENSORS+5];
-    Sensor Active_Sensors[NUMB_OF_SENSORS+5];
+    Sensor List_of_Sensors[NUMB_OF_SENSORS];
+    Sensor Active_Sensors[NUMB_OF_SENSORS];
     Sensor Blank(0,0);
     for(int i=0;i<NUMB_OF_SENSORS+5;i++){
         Active_Sensors[i]= Blank;
     }
     float activeSensorCount = 0;
-    const float AREA_OF_SENSORS=78.54;
     float AreaTaken=2500;
     int number_of_rounds = 0;
     Sensor Center(25,25);
+    
+    randomizeSensors(List_of_Sensors);
 
-    /*creates variables that are used int the project.
-    made constants for the limit of x and y for the graph for easy change.
-
-    created sets of sensors. one for all the sensors and one for the solution set.
-
-    created a float for the count of active sensors.
-    is a float so it can do arithematic with Area taken later in program.
-
-    made AREA OF SENSORS const to make it easier to calculate AreaTaken in the program later.
-
-    AreaTaken is to have a place to store the amount of area the optimal set takes up at each round.*/
-
-    bool checkOverlap(Sensor sensorOne, Sensor sensorTwo);
-    bool ArrayCheckOverlap(Sensor activeSen[],int numb_of_activeSen,Sensor CheckAgainst);
-    bool CheckBattery(Sensor check[], int numb_sensors);
-    /*fucntion calls*/
-
-    fout.open("SensorInfo.csv");
-    /*opens fout to a .csv file so we can make Excel Graph the sensors for us*/
-
-
-    for(int i = 0; i<NUMB_OF_SENSORS;i++)
-    {
-        List_of_Sensors[i] = Sensor(rand()%LIM_X,rand()%LIM_Y);
-        fout<<List_of_Sensors[i].GetX()<<","<<List_of_Sensors[i].GetY()<<","<<List_of_Sensors[i].GetRadius()<<","<<List_of_Sensors[i].GetBattery()<<endl;
-    }
-    // creates NUMB OF SENSORS  sensors and puts them in array List of Sensors. then outputs the list of sensors into "SensorInfo.csv"
-    fout.close();
-
-
-    while(CheckBattery(List_of_Sensors,NUMB_OF_SENSORS+5)==true && ((LIM_X*LIM_Y)/2)<AreaTaken)//while a sensor in the array still has battery and area taken is more than half
-    {
-         //add sensors to solution
-         for(int i=0;i<NUMB_OF_SENSORS;i++)
-         {
-            int Add_to_solution=0;
-            Sensor a =List_of_Sensors[i];
-            if (a.GetBattery() > 0 && ArrayCheckOverlap(Active_Sensors, activeSensorCount, a))
-            {
-                Active_Sensors[Add_to_solution] = a;
-                Add_to_solution++;
-                activeSensorCount++;
-            }
-            
-         }
-
+    
+    
+    
          
 
          for (int i=0;i<activeSensorCount; i++)// for each round decreases the battery by 1
@@ -87,7 +55,6 @@ int main()
              Active_Sensors[i].SetBattery(Active_Sensors[i].GetBattery()-1);
          }
          number_of_rounds++;
-     }
 //implementaion of greedy algorithm
 
 cout<<"/n/nTimes Ran: "<<number_of_rounds<<endl;
@@ -109,6 +76,46 @@ cout<<ArrayCheckOverlap(test,50,test2);
 
 }
 
+int randomizeSensors(Sensor& List_of_Sensors[])
+{
+    ofstream fout;
+    //creates var for outstream
+    fout.open("SensorInfo.csv");
+    /*opens fout to a .csv file so we can make Excel Graph the sensors for us*/
+    for(int i = 0; i<NUMB_OF_SENSORS;i++)
+    {
+        List_of_Sensors[i] = Sensor(rand()%LIM_X,rand()%LIM_Y); // FIX THIS, VALUES NEED TO BE DECIMALS
+        fout<<List_of_Sensors[i].GetX()<<","<<List_of_Sensors[i].GetY()<<","<<List_of_Sensors[i].GetRadius()<<","<<List_of_Sensors[i].GetBattery()<<endl;
+    }
+    // creates NUMB OF SENSORS  sensors and puts them in array List of Sensors. then outputs the list of sensors into "SensorInfo.csv"
+    fout.close();
+}
+
+int populateActiveSensors(Sensor List_of_Sensors[], Sensor& activeSensors[])
+{
+    while(CheckBattery(List_of_Sensors,NUMB_OF_SENSORS)==true && ((LIM_X*LIM_Y)/2)<AreaTaken)//while a sensor in the array still has battery and area taken is more than half
+    {
+         //add sensors to solution
+         for(int i=0;i<NUMB_OF_SENSORS;i++)
+         {
+            int Add_to_solution=0;
+            Sensor a = List_of_Sensors[i];
+            if (a.GetBattery() > 0 && ArrayCheckOverlap(Active_Sensors, activeSensorCount, a))
+            {
+                Active_Sensors[Add_to_solution] = a;
+                Add_to_solution++;
+                activeSensorCount++;
+            }
+            
+         }
+
+     }
+}
+
+void printData(int coverage, int round)
+{
+}
+
 bool checkOverlap(Sensor sensorOne, Sensor sensorTwo)// checks if 2 sensors overlap each other.
 {
     bool overlap = false;
@@ -117,9 +124,8 @@ bool checkOverlap(Sensor sensorOne, Sensor sensorTwo)// checks if 2 sensors over
     float centerX = sensorTwo.GetX()-sensorOne.GetX();
     float centerY = sensorTwo.GetY()-sensorOne.GetY();
     float distance = sqrt((centerX*centerX) + (centerY*centerY)); //distance between sensors
-    float sumRad = sensorOne.GetRadius() + sensorTwo.GetRadius();
 
-    if(sumRad < distance)
+    if(3 > distance)
     {
         overlap = true;
     }
