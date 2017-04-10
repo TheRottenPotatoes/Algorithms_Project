@@ -31,7 +31,6 @@ int main()
         Active_Sensors[i]= Blank;
     }
     float activeSensorCount = 0;
-    const float AREA_OF_SENSORS=78.54;
     int number_of_rounds = 0;
     Sensor Center(25,25);
 
@@ -53,6 +52,7 @@ int main()
     bool ArrayCheckOverlap(Sensor activeSen[],int numb_of_activeSen, Sensor j);
     bool CheckBattery(Sensor check[], int numb_sensors);
     float estimateCoverage(int M, Sensor activeSensors[], int activeSensorCount);
+
     //fucntion calls
 
 fout.open("SensorInfo.csv");
@@ -80,7 +80,7 @@ for(int i=1;i<NUMB_OF_SENSORS;i++)
 
 
     do{//while a sensor in the array still has battery and
-cout<<"A";
+
     		int Add_to_solution=0;
     		Sensor optimal= List_of_Sensors[0];
 
@@ -89,13 +89,15 @@ cout<<"A";
 
             Sensor testAgainst=List_of_Sensors[j];
 
-    		while(ArrayCheckOverlap(Active_Sensors,Add_to_solution,testAgainst)==true)
-    		{//cout<<"B";
+    		if(ArrayCheckOverlap(Active_Sensors,Add_to_solution,testAgainst)==false )
+    		{
     			for(int i=1;i<NUMB_OF_SENSORS;i++)
     			{
-    				if(abs(List_of_Sensors[i].GetX()-25)<abs(first.GetX()-25) || abs(List_of_Sensors[i].GetY()-25)< abs(first.GetY()-25))
+    				if((abs(List_of_Sensors[i].GetX()-25)<abs(first.GetX()-25) || abs(List_of_Sensors[i].GetY()-25)< abs(first.GetY()-25) && testAgainst.GetUsed()==false))
     				{
     					optimal=List_of_Sensors[i];
+    					List_of_Sensors[i].SetUsed(true);
+
 					}
 				}
 			}
@@ -109,9 +111,9 @@ cout<<"A";
 
 
 
-    for (int i=0;i<activeSensorCount; i++)// for each round decreases the battery by 1
+    for (int i=0;i<NUMB_OF_SENSORS+5; i++)// for each round decreases the battery by 1
         {
-            cout<<"Number: "<<i<<"/nXCoordinate: "<<Active_Sensors[i].GetX()<<"/nYCoordinate: "<<Active_Sensors[i].GetY()<<endl;
+            cout<<"Number: "<<i<<"\nXCoordinate: "<<Active_Sensors[i].GetX()<<"\nYCoordinate: "<<Active_Sensors[i].GetY()<<endl;
             Active_Sensors[i].SetBattery(Active_Sensors[i].GetBattery()-1);
         }
         number_of_rounds++;
@@ -184,3 +186,4 @@ float estimateCoverage(int M, Sensor activeSensors[], int activeSensorCount)
   }
   return (coverage / M);
 }
+
